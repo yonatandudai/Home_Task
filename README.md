@@ -1,70 +1,171 @@
-# Getting Started with Create React App
+# URL Metadata Fetcher
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This is a full-stack application that allows users to input a list of URLs, fetch metadata (title, description, image) for each URL, and display the results on the front-end. The application is built using React for the front-end and Node.js for the back-end.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Front-End (React):**
+  - User-friendly interface for inputting URLs.
+  - Displays fetched metadata including title, description, and image.
+  - Error handling for invalid URLs.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Back-End (Node.js):**
+  - API endpoint `/fetch-metadata` to fetch metadata for URLs.
+  - Rate limiting to handle a maximum of 5 requests per second.
+  - Error handling for invalid URLs or failed metadata retrieval.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Security:**
+  - HTTP headers secured using `helmet`.
+  - CSRF protection implemented with `csurf`.
+  - Input validation and sanitization to prevent XSS attacks.
 
-### `npm test`
+## Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+url-metadata-fetcher/
+├── client/                   # React front-end application
+│   ├── public/
+│   ├── src/
+│   ├── package.json
+│   └── package-lock.json
+│
+├── server/                   # Node.js back-end server
+│   ├── index.js              # Main server file
+│   ├── tests/                # Directory for back-end tests
+│   │   └── server.test.js    # Example test file
+│   ├── package.json
+│   └── package-lock.json
+│
+├── .gitignore                # Files and directories to ignore in Git
+├── README.md                 # Project documentation
+└── package.json              # (Optional) Root-level package.json
+```
 
-### `npm run build`
+## Installation and Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js and npm installed on your machine.
+- Git for version control.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Clone the Repository
 
-### `npm run eject`
+```bash
+git clone https://github.com/yonatandudai/url-metadata-fetcher.git
+cd url-metadata-fetcher
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Front-End Setup
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Navigate to the `client` directory:
+   ```bash
+   cd client
+   ```
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the React development server:
+   ```bash
+   npm start
+   ```
+   The front-end will be running on `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Back-End Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Navigate to the `server` directory:
+   ```bash
+   cd server
+   ```
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Node.js server:
+   ```bash
+   npm start
+   ```
+   The back-end server will be running on `http://localhost:5000`.
 
-## Learn More
+### Running Tests
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Back-End Tests
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Navigate to the `server` directory:
+   ```bash
+   cd server
+   ```
+2. Run the tests:
+   ```bash
+   npm test
+   ```
 
-### Code Splitting
+#### Front-End Tests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Navigate to the `client` directory:
+   ```bash
+   cd client
+   ```
+2. Run the tests:
+   ```bash
+   npm test
+   ```
 
-### Analyzing the Bundle Size
+## API Documentation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### POST `/fetch-metadata`
 
-### Making a Progressive Web App
+- **Description:** Fetches metadata (title, description, and image) for a list of URLs.
+- **Request Body:**
+  ```json
+  {
+      "urls": ["url": "https://www.geeksforgeeks.org/","https://www.linkedin.com/", "https://www.w3schools.com/"]}'
+  }
+  ```
+- **Response:**
+  - **Success (200):**
+    ```json
+    [
+        {
+            "url": "https://www.geeksforgeeks.org/",
+            "title": "GeeksforGeeks | A computer science portal for geeks",
+            "description": "A Computer Science portal for geeks. It contains well written, well thought 
+             and well explained computer science and programming articles, quizzes and 
+             practice/competitive programming/company interview Questions.",
+            "image": "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png"
+        },
+        {
+        "url": "https://www.linkedin.com/",
+        "title": "LinkedIn: Log In or Sign Up",
+        "description": "1 billion members | Manage your professional identity. Build and engage with 
+         your professional network. Access knowledge, insights and opportunities.",
+        "image": "https://static.licdn.com/scds/common/u/images/logos/favicons/v1/favicon.ico"
+        },
+    {
+        "url": "https://www.w3schools.com/",
+        "title": "W3Schools Online Web Tutorials",
+        "image": "https://www.w3schools.com/images/w3schools_logo_436_2.png"
+    }
+    ]
+    ```
+  - **Error (400):** Invalid input format (e.g., non-array input).
+  - **Error (429):** Rate limit exceeded.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Design Choices
 
-### Advanced Configuration
+- **React:** Chosen for its component-based architecture, making it easier to build and maintain the front-end.
+- **Express (Node.js):** Used for its simplicity and flexibility in building RESTful APIs.
+- **Rate Limiting:** Implemented to prevent abuse and manage server load, using `express-rate-limit`.
+- **Security:** Secured using `helmet` for HTTP headers and `csurf` for CSRF protection. Inputs are validated and sanitized to protect against XSS.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## License
 
-### Deployment
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contact
 
-### `npm run build` fails to minify
+For any questions or inquiries, please contact me at: yonatandu@outlook.com.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
