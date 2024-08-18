@@ -4,6 +4,9 @@
 
 This is a full-stack application that allows users to input a list of URLs, fetch metadata (title, description, image) for each URL, and display the results on the front-end. The application is built using React for the front-end and Node.js for the back-end.
 
+## Live Demo
+You can view a live demo of the application [here](#) (Replace this link with your live demo URL).
+
 ## Features
 
 - **Front-End (React):**
@@ -71,7 +74,6 @@ cd url-metadata-fetcher
    ```bash
    npm start
    ```
-   The front-end will be running on `http://localhost:3000`.
 
 ### Back-End Setup
 
@@ -87,7 +89,6 @@ cd url-metadata-fetcher
    ```bash
    npm start
    ```
-   The back-end server will be running on `http://localhost:5000`.
 
 ### Running Tests
 
