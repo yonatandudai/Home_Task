@@ -114,6 +114,11 @@ cd url-metadata-fetcher
    npm test
    ```
 
+#### Access the application:
+
+* Visit http://localhost:3000 in your web browser for    the front-end.
+* The back-end API is running on http://localhost:5000.
+
 ## API Documentation
 
 ### POST `/fetch-metadata`
